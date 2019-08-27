@@ -7,28 +7,14 @@ import * as serviceWorker from './serviceWorker';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
-// const bookReducer = [];
-// actions are objects!
-// action.type
-// action.payload
-const bookShelfReducer = (state = ['The Republic'], action) => {
-    if(action.type === 'ADD_BOOK_ACTION'){
-        return [
-            ...state,
-            action.payload
-        ]
-        // Now, ['The Republic', 'P&P', 'Green Eggs and Ham']
-    }
-
-    return [
-        ...state
-    ]
-}
-
+// REDUCERS
+import bookShelfReducer from './reducers/bookShelf.reducer';
+import userReducer from './reducers/user.reducer';
 
 const storeInstance = createStore(
     combineReducers({
-        bookShelfReducer
+        bookShelfReducer,
+        userReducer
     })
 )
 

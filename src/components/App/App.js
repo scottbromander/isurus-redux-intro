@@ -1,50 +1,49 @@
 import React, {Component} from 'react';
 import './App.css';
 import { connect } from 'react-redux';
+import mapStoreToProps from '../../modules/mapStoreToProps';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import BookInputPage from '../pages/BookInputPage/BookInputPage';
+import BookShelfPage from '../pages/BookshelfPage/BookshelfPage';
+import HomePage from '../pages/HomePage/HomePage';
+import UserPage from '../pages/UserPage/UserPage';
 
 class App extends Component {
-
-  state = {
-    bookTitle: ''
-  }
-
-  updateBook = (event) => {
-    this.setState({
-      bookTitle : event.target.value
-    })
-  }
-
-  addToBookshelf = (event) => {
-    // Will eventually add the book to the bookshelfReducer!
-    this.props.dispatch({type:'ADD_BOOK_ACTION', payload:this.state.bookTitle});
-  }
-
   render() {
-
-    const bookArray = this.props.store.bookShelfReducer.map((book, index) => {
-      return (
-        <li key={index}>{book}</li>
-      )
-    });
-
     return (
       <div className="App">
-        <h1>Bookstore</h1>
-        <input onChange={this.updateBook} type="text" placeholder="Enter a book name!" />
-        <button onClick={this.addToBookshelf}>Add Book</button>
+        <Router>
+          <div className="hero">
+            <h1>Bookstore</h1>
+          </div>
+          
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
 
-        <h2>Bookshelf</h2>
-        <ul>
-          {bookArray}
-        </ul>
+            <li>
+              <Link to="/bookinput">Book Input</Link>
+            </li>
+            
+            <li>
+              <Link to="/bookshelf">Bookshelf</Link>
+            </li>
+
+            <li>
+              <Link to="/user">User Page</Link>
+            </li>
+          </ul>
+
+          <div className="container">
+            <Route exact path="/" component={HomePage} />
+            <Route path="/bookinput" component={BookInputPage} />
+            <Route path="/bookshelf" component={BookShelfPage} />
+            <Route path="/user" component={UserPage} />
+          </div>
+        </Router>
       </div>
     );
-  }
-}
-
-const mapStoreToProps = (store) => {
-  return {
-    store
   }
 }
 
