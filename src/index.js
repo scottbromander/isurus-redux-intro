@@ -1,12 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// const bookReducer = [];
+// actions are objects!
+// action.type
+// action.payload
+const bookShelfReducer = (state = ['The Republic'], action) => {
+    if(action.type === 'ADD_BOOK_ACTION'){
+        return [
+            ...state,
+            action.payload
+        ]
+        // Now, ['The Republic', 'P&P', 'Green Eggs and Ham']
+    }
+
+    return [
+        ...state
+    ]
+}
+
+
+const storeInstance = createStore(
+    combineReducers({
+        bookShelfReducer
+    })
+)
+
+ReactDOM.render(<Provider store={storeInstance}><App /></Provider>, document.getElementById('root'));
 serviceWorker.unregister();
